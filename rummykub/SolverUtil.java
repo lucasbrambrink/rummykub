@@ -9,9 +9,17 @@ import java.util.stream.Collectors;
  *
  */
 public class SolverUtil
+// Scheme:
+// -> for each board state:
+//     -> explores all possible pairings between two {@code TileSet}
+//          -> if they produce a "productive set" i.e. its a valid combination
+//               -> recurse into a new board state, i.e. add to stack
+// -> if found winning solution, reached maximum recursive depth or max amount of comparisons, stop
+//
 {
    public static final int MAX_RECURSIVE_DEPTH = 10;
    public static final int MAX_NUM_STATES = 100000;
+   public static final boolean PRINT_INTERMEDIATES = false;
 
    public static ArrayList<IntermediateGameState> findOptimalSolutions(
          ArrayList<TileSet> pool, ArrayList<TileSet> intermediatePool, ArrayList<Tile> holdingTiles
@@ -59,8 +67,11 @@ public class SolverUtil
             for (TileSet incorporate : tileSetsToTry)
             {
                ArrayList<TestTileResult> results = new ArrayList<TestTileResult>();
-
-//               System.out.println("INCORPORATING " + incorporate.print());
+               if (PRINT_INTERMEDIATES)
+               {
+                  System.out.println("INCORPORATING " + incorporate.print());
+               }
+               // try to find a match against the pool
                results.addAll(
                      tryTileSetAgainst(
                            incorporate,
@@ -68,6 +79,7 @@ public class SolverUtil
                            Source.POOL
                      )
                );
+               // try to find a match against the intermediate pool
                results.addAll(
                      tryTileSetAgainst(
                            incorporate,
@@ -75,6 +87,7 @@ public class SolverUtil
                            Source.INTERMEDIATE
                      )
                );
+               // try to find a match against any of the holding tiles
                results.addAll(
                      tryTileSetAgainst(
                            incorporate,
@@ -82,7 +95,16 @@ public class SolverUtil
                            Source.HOLDING
                      )
                );
-//               System.out.println("RESULTS NEW " + results.size());
+               if (PRINT_INTERMEDIATES)
+               {
+                  System.out.println("RESULTS NEW " + results.size());
+
+               }
+
+               // check each "productive pair" — if it's a state we have not seen before,
+               // recurse and explore that state further
+               // if we have seen it before, dont add to avoid infinite looping over cyclical
+               // states
                for (TestTileResult result : results)
                {
                   ArrayList<IntermediateGameState> possibleStates = handleTestTileResult(
@@ -98,24 +120,30 @@ public class SolverUtil
                   {
                      if (seenStates.add(possibleState.serialize()))
                      {
-//                        System.out.println("BEFORE");
-//                        IntermediateGameState t = new IntermediateGameState(
-//                              state.pool,
-//                              state.intermediatePool,
-//                              state.holdingTiles
-//                        );
-//                        t.depth = depth;
-//                        t.showResult();
-//                        System.out.println("AFTER");
                         newAllStates.add(possibleState);
-//                        possibleState.depth = depth;
-//                        possibleState.showResult();
+                        if (PRINT_INTERMEDIATES)
+                        {
+                           System.out.println("BEFORE");
+                           IntermediateGameState t = new IntermediateGameState(
+                                 state.pool,
+                                 state.intermediatePool,
+                                 state.holdingTiles
+                           );
+                           t.depth = depth;
+                           t.showResult();
+                           System.out.println("AFTER");
+                           possibleState.depth = depth;
+                           possibleState.showResult();
+                        }
                         numberOfStatesScanned++;
                      }
                      else
                      {
                         numberOfStatesScanned++;
-//                        System.out.println("ALREADY SEEN!!!");
+                        if (PRINT_INTERMEDIATES)
+                        {
+                           System.out.println("ALREADY SEEN!!!");
+                        }
                      }
                   }
                }
@@ -128,12 +156,16 @@ public class SolverUtil
                // continue if not empty
                keepTrying = !intermediateState.holdingTiles.isEmpty();
                allValidGameStates.add(intermediateState);
-//               System.out.println("INITIAL STATE");
-//               initialGameState.depth = 1;
-//               initialGameState.showResult();
-//               System.out.println("FOUND SOLUTION");
-//               intermediateState.depth = 1;
-//               intermediateState.showResult();
+               if (PRINT_INTERMEDIATES)
+               {
+                  System.out.println("INITIAL STATE");
+                  initialGameState.depth = 1;
+                  initialGameState.showResult();
+                  System.out.println("FOUND SOLUTION");
+                  intermediateState.depth = 1;
+                  intermediateState.showResult();
+
+               }
                if (intermediateState.holdingTiles.isEmpty())
                {
                   System.out.println("FOUND WINNING SOLUTION");
@@ -230,7 +262,8 @@ public class SolverUtil
             continue;
          }
 
-         // do the splits
+         // if its an incomplete set of length 2, we want to explore
+         // both states: the complete set and the set split into 2 singlets
          clone = new ArrayList<TileSet>(newIntermediatePool);
          Tile tileToSplit = ts.getTiles().get(1);
          TileSet[] splits = ts.splitBefore(tileToSplit);
@@ -259,6 +292,7 @@ public class SolverUtil
          {
             continue;
          }
+         // try combining the entire tile set
          TileSet newTileSet = TileSet.testTileSet(
                incorporate,
                set,
@@ -275,7 +309,7 @@ public class SolverUtil
                   )
             );
          }
-
+         // try each tile in the set individually
          for (Tile setTile : set.getTiles())
          {
             newTileSet = TileSet.testTileSet(

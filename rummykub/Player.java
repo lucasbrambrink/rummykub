@@ -42,6 +42,9 @@ public class Player
       return this.holdingTiles.isEmpty();
    }
 
+   /*
+    * DEPRECATED
+    */
    public void takeTurn(Tile newTile, ArrayList<TileSet> pool)
    {
       this.addTile(newTile);
@@ -79,6 +82,7 @@ public class Player
    {
       if (newTile != null)
       {
+         System.out.println(this.name + " DREW " + newTile.print());
          this.addTile(newTile);
       }
       this.sortUnorderedTiles();
@@ -129,32 +133,6 @@ public class Player
             this.holdingTiles.addAll(bestSolution.holdingTiles);
          }
       }
-
-//      ArrayList<TileSet> holdingSets = produceTileSetUnordered();
-//      if (!this.isOnTheBoard)
-//      {
-//         int value = (int) holdingSets.stream().collect(Collectors.summarizingInt(TileSet::getTotalValue)).getSum();
-//         if (value >= 30)
-//         {
-//            canPlay = true;
-//            this.isOnTheBoard = true;
-//         }
-//      }
-//      if (canPlay && !holdingSets.isEmpty())
-//      {
-//         pool.addAll(holdingSets);
-//         System.out.println(
-//               this.name + " PLAYED " + holdingSets.stream().map(tile -> tile.print()).collect(Collectors.joining(" "))
-//         );
-//         for (TileSet tileSet : holdingSets)
-//         {
-//            this.holdingTiles.removeAll(tileSet.getTiles());
-//         }
-//      }
-//      if (this.isOnTheBoard)
-//      {
-//         manipulateTheBoard(pool);
-//      }
    }
 
    public boolean getIsOnTheBoard()
@@ -170,13 +148,8 @@ public class Player
    }
 
    /*
-    * Scheme
-    * 
-    * 1. treat all tiles on the board as a "lake of tiles" 2. construct as much as
-    * possible with lake + own tiles 3. if the end result is fewer
-    * 
+    * DEPRECATED
     */
-
    public ArrayList<TileSet> produceTileSetUnordered()
    {
       // go through unodered tile set and
@@ -243,6 +216,9 @@ public class Player
       return reducedSets;
    }
 
+   /*
+    * DEPRECATED
+    */
    public void manipulateTheBoard(ArrayList<TileSet> pool)
    {
       boolean continueMakingMoves = true;
@@ -435,55 +411,4 @@ public class Player
       }
       return groups;
    }
-
-   /*
-    * Issue is that in order to check if 1234, 1 & 4 are available but with
-    * exclusion to each other
-    * 
-    * Need a full game state as well
-    * 
-    * SetA = { (tile1, SetA without 1), (tile2, SetA without 2) } SetB = { ... }
-    * 
-    * Group of all available tiles: tileA1, tileB1
-    */
-//   public TileSet applyAtTileSet(ArrayList<TileSet> pool)
-//   {
-//      TileSet testSet;
-//      // test against all possible splits
-//      for (TileSet publicTileSet : pool)
-//      {
-//         for (TileSet[] splitPair : publicTileSet.possibleSplitPairs())
-//         {
-//            // just 1 level
-//            TileSet leftSet = splitPair[0];
-//            TileSet rightSet = splitPair[1];
-//
-//            for (TileSet bestGroup : this.organizeIntoBestSets())
-//            {
-//               testSet = leftSet.testNewTileSet(bestGroup);
-//               if (testSet != null && rightSet.isValid(true))
-//               {
-//                  return
-//                  // apply left
-//                  System.out.println(
-//                        this.name + " JOINING " + leftSet.print() + " WITH " + bestGroup.print() + " LEAVING "
-//                              + rightSet.print()
-//                  );
-////                     pool.remove(tileSet);
-////                     pool.addAll(newSet);
-////                     this.holdingTiles.remove(foundTile);
-////                     System.out
-////                           .println(this.name + " SPLIT " + tileSet.print() + " TO " + newSet.get(0).print() + " & " + newSet.get(1).print());
-//                  changesHaveBeenMade = true;
-//                  break;
-//               }
-//               newSet = rightSet.testNewTileSplit(bestGroup);
-//               if (newSet != null && leftSet.isValid(true))
-//               {
-//                  // apply right
-//               }
-//            }
-//
-//         }
-//      }
 }
