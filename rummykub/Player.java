@@ -1,6 +1,3 @@
-/**
- * 
- */
 package rummykub;
 
 import java.util.ArrayList;
