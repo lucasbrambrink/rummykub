@@ -56,24 +56,6 @@ public class Solver
                   newGameState.tileSetToAdd = tileSetToAdd;
                   newGameState.foundTile = found.tile;
                   newGameState.previousState = stateClone;
-//                  System.out.println("TILE SET TO ADD");
-//                  PrintUtil.printTileSet(tileSetToAdd);
-//                  System.out.println("MEMBER OF");
-//                  PrintUtil.printTileSet(found.memberOf);
-
-                  if (newGameState.publicPool.size() == 0)
-                  {
-//                     System.out.println("OMGGGGGG");
-//                     System.out.println(newGameState.allPublicSets.size());
-//                     for (TileSet tileSet : newGameState.allPublicSets)
-//                     {
-//                        PrintUtil.printTileSet(tileSet);
-//                     }
-//                     PrintUtil.printGameState(newGameState);
-//                     PrintUtil.printGameState(state);
-//                     System.out.println("TO ADD");
-//                     PrintUtil.printTileSet(tileSetToAdd);
-                  }
 
                   // STEP 2: get best mutation
                   GameStateMutation mutation = GameStateUtil.getBestMutation(
