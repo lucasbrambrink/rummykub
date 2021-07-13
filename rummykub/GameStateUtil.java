@@ -1,6 +1,3 @@
-/**
- * 
- */
 package rummykub.v2;
 
 import java.util.ArrayList;
@@ -203,6 +200,20 @@ public class GameStateUtil
       sortPool(state.intermediatePoolDoubles);
       sortPool(state.intermediatePoolSingles);
       sortPool(state.holdingTiles);
+   }
+
+   public static int calculateMutationCost(GameStateMutation mutation, GameState initialState)
+   {
+      if (mutation.operation == StateOperation.MERGE || mutation.operation == StateOperation.SPLIT_MERGE)
+      {
+         return 0;
+      }
+      // 1 points for each added in the singles
+      int newlyAdded = mutation.newState.intermediatePoolSingles.size() - initialState.intermediatePoolSingles.size();
+      return Math.max(
+            newlyAdded,
+            0
+      );
    }
 
    public static void handleMutationResult(GameState newGameState, TileSet newTileSet, TileSet mutatedTileSet)

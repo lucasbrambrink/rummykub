@@ -1,6 +1,3 @@
-/**
- * 
- */
 package rummykub.v2;
 
 import java.util.ArrayList;
@@ -107,17 +104,7 @@ public class TileSetUtil
       int initialIndex = tileSet.tiles.indexOf(tile);
       if (initialIndex == -1)
       {
-         System.out.println("THIS");
-         PrintUtil.printTileSet(tileSet);
-         System.out.println(tile);
-         for (Tile tiles : tileSet.tiles)
-         {
-            System.out.println(tiles);
-         }
-         System.out.println(PrintUtil.tileToString(tile));
-//         System.out.println(PrintUtil.tileToString(tile));
-         throw new IllegalArgumentException("BUSTED OMG HERE");
-//         return null;
+         throw new IllegalArgumentException("Unable to find tile");
       }
       tileSet.tiles.remove(tile);
 
@@ -254,7 +241,6 @@ public class TileSetUtil
       }
       else
       {
-//         System.out.println("INCORRECT " + PrintUtil.tileSetToString(tileSet));
          throw new IllegalArgumentException("Invalid Set");
       }
    }

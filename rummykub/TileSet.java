@@ -1,6 +1,3 @@
-/**
- * 
- */
 package rummykub.v2;
 
 import java.util.ArrayList;
@@ -75,10 +72,6 @@ public class TileSet
                && this.setType == SetType.RUN)
          {
             Tile joker = this.tiles.remove(this.size() - 1);
-//            System.out
-//                  .println("CHANGING JOKER FROM " + joker.value + " TO " + String.valueOf(this.tiles.get(0).value - 1));
-//            joker.value = this.tiles.get(0).value - 1;
-
             this.tiles.add(
                   0,
                   joker
@@ -118,7 +111,6 @@ public class TileSet
          }
          previousTile = tile;
       }
-//      joker.value = this.tiles.get(1).value;
    }
 
 }

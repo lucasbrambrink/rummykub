@@ -1,6 +1,3 @@
-/**
- * 
- */
 package rummykub.v2;
 
 import java.io.File;

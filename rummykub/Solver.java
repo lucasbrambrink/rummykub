@@ -1,5 +1,5 @@
 /**
- * 
+ * Main algorithm for solving a rummykub state 
  */
 package rummykub.v2;
 
@@ -77,7 +77,10 @@ public class Solver
 
                   // Step 5: calculate the cost of this mutation
                   // if too high, don't
-                  int cost = mutation.calculateCost(state);
+                  int cost = GameStateUtil.calculateMutationCost(
+                        mutation,
+                        state
+                  );
                   newGameState.runningCost += cost;
                   if (PRINT)
                   {
