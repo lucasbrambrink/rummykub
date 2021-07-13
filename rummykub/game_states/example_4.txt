@@ -1,0 +1,6 @@
+POOL
+Y1 2 3 4 5
+R9 J 11 12
+
+HOLDING
+Y3
