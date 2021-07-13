@@ -1,5 +1,7 @@
 # rummykub
-Command line Rummykub implementation &amp; solver
+A quasi-polynomial algorithm for solving rummykub states. It is mostly exponential, but tries to avoid solutions
+that become too computationally complex. So far it has managed to find a solution to even the most sophisticated
+game states that I could devise.
 
 Examples
 
