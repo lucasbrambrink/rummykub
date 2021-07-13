@@ -10,7 +10,7 @@ public class TestingSuite
    public static void runTestSuite()
    {
       System.out.println("*".repeat(300));
-      GameState loadedState = GameStateFileParser.load("rummykub/game_results/example_3.txt");
+      GameState loadedState = GameStateFileParser.load("rummykub/game_results/example_3_2.txt");
       PrintUtil.printGameState(loadedState);
 
       GameState solution = Solver.findSolution(loadedState);

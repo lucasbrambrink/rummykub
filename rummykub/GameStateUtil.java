@@ -217,7 +217,6 @@ public class GameStateUtil
          {
             newGameState.allPublicSets.add(newTileSet);
          }
-//         newGameState.allPublicSets.add(newTileSet);
       }
       // split up the tile set into singles
       if (mutatedTileSet.size() == 2)
@@ -262,7 +261,6 @@ public class GameStateUtil
       }
       else
       {
-         System.out.println("EMPTY!!");
          return null;
       }
    }
@@ -299,10 +297,6 @@ public class GameStateUtil
       {
          System.out.println("INCORPORATING " + PrintUtil.tileSetToString(tileSetToAdd));
       }
-      if (newGameState == null || tileSetToAdd == null || found == null)
-      {
-         System.out.println("WE AER HERE");
-      }
       GameStateMutation mutation = tryMerge(
             newGameState,
             tileSetToAdd,
@@ -332,22 +326,7 @@ public class GameStateUtil
    private static GameStateMutation tryMerge(GameState newGameState, TileSet tileSetToAdd, TileMembership found)
    {
       TileSet tileSetToMutate = newGameState.tileSetMap.get(TileSetUtil.serialize(found.memberOf));
-//      System.out.println(PrintUtil.tileSetToString(found.memberOf));
-//      for (TileSet tileSet : newGameState.allPublicSets)
-//      {
-//         System.out.print("MERGE ");
-//         PrintUtil.printTileSet(tileSet);
-//      }
-      if (tileSetToMutate == null)
-      {
-         System.out.println("DIDNT FIND IT");
-         System.out.println(TileSetUtil.serialize(found.memberOf));
-         for (String key : newGameState.tileSetMap.keySet())
-         {
-            System.out.println(key);
-         }
-         PrintUtil.printGameState(newGameState);
-      }
+
       TileSet mergedTileSet = TileSetUtil.mergeTileSets(
             tileSetToMutate,
             tileSetToAdd
@@ -375,22 +354,6 @@ public class GameStateUtil
       String serializedTileSte = TileSetUtil.serialize(found.memberOf);
       TileSet tileSetToMutate = newGameState.tileSetMap.get(serializedTileSte);
 
-      if (tileSetToMutate == null)
-      {
-         System.out.println("WOW WE DID IT ");
-         System.out.println(TileSetUtil.serialize(found.memberOf));
-         PrintUtil.printTileSet(found.memberOf);
-         for (TileSet key : newGameState.tileSetMap.values())
-         {
-            PrintUtil.printTileSet(key);
-            System.out.println(TileSetUtil.serialize(key));
-//            System.out.println(key);
-         }
-         System.out.println(newGameState.tileSetMap.containsKey(TileSetUtil.serialize(found.memberOf)));
-         System.out.println(newGameState.tileSetMap.get(TileSetUtil.serialize(found.memberOf)));
-//         tileSetToMutate = newGameState.tileSetMap.get(TileSetUtil.serialize(found.memberOf));
-         System.out.println(tileSetToMutate);
-      }
       TileSet[] splitSets = TileSetUtil.splitAndMerge(
             tileSetToMutate,
             tileSetToAdd
@@ -418,18 +381,6 @@ public class GameStateUtil
    private static GameStateMutation performSplit(GameState newGameState, TileSet tileSetToAdd, TileMembership found)
    {
       TileSet tileSetToMutate = newGameState.tileSetMap.get(TileSetUtil.serialize(found.memberOf));
-//      System.out.println("START");
-//      PrintUtil.printTileSet(found.memberOf);
-//      for (TileSet key : newGameState.tileSetMap.values())
-//      {
-//         System.out.println("KEY " + TileSetUtil.serialize(key));
-//         PrintUtil.printTileSet(key);
-////         System.out.println(key);
-//      }
-//      for (String key : newGameState.tileSetMap.keySet())
-//      {
-//         System.out.println(key);
-//      }
       Tile tileToRemove = found.tile;
       if (tileSetToAdd.tiles.indexOf(found.tile) == -1)
       {
