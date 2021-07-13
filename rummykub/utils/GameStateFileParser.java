@@ -1,9 +1,14 @@
-package rummykub.v2;
+package rummykub.v2.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import rummykub.v2.dataStructures.GameState;
+import rummykub.v2.dataStructures.Tile;
+import rummykub.v2.dataStructures.TileSet;
+import rummykub.v2.enums.Color;
 
 /**
  * @author lucasbrambrink

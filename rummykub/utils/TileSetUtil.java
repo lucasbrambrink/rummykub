@@ -1,8 +1,13 @@
-package rummykub.v2;
+package rummykub.v2.utils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
+
+import rummykub.v2.dataStructures.Tile;
+import rummykub.v2.dataStructures.TileSet;
+import rummykub.v2.enums.Color;
+import rummykub.v2.enums.SetType;
 
 /**
  * @author lucasbrambrink

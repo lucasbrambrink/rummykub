@@ -7,20 +7,43 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import rummykub.v2.dataStructures.GameState;
+import rummykub.v2.dataStructures.GameStateMutation;
+import rummykub.v2.dataStructures.Tile;
+import rummykub.v2.dataStructures.TileMembership;
+import rummykub.v2.dataStructures.TileSet;
+import rummykub.v2.utils.GameStateUtil;
+import rummykub.v2.utils.PrintUtil;
+import rummykub.v2.utils.TileSetUtil;
+import rummykub.v2.utils.TileUtil;
+
 /**
  * @author lucasbrambrink
  *
  */
 public class Solver
 {
-   public static final int MAX_COST = 20;
-   public static boolean PRINT = false;
-   public static int MAX_NUM_STATES = 100000;
+   public boolean verbose;
+   public int maxCost;
+   public int maxNumStates;
+   public static int DEFAULT_MAX_COST = 20;
+   public static int DEFAULT_MAX_NUM_STATES = 100000;
+
+   public Solver(
+         boolean verbose,
+         int maxCost,
+         int maxNumStates
+   )
+   {
+      this.verbose = verbose;
+      this.maxCost = maxCost == 0 ? DEFAULT_MAX_COST : maxCost;
+      this.maxNumStates = maxNumStates == 0 ? DEFAULT_MAX_NUM_STATES : maxCost;
+   }
 
    /*
     * Sequester the tileSetToAdd into the initialGameState if possible
     */
-   public static GameState findSolution(GameState initialGameState)
+   public GameState findSolution(GameState initialGameState)
    {
       boolean keepIterating = true;
       HashSet<String> seenGameStates = new HashSet<String>();
@@ -29,7 +52,7 @@ public class Solver
       ArrayList<GameState> statesToExplore = new ArrayList<GameState>();
       int totalNumberOfStatesExplored = 0;
       statesToExplore.add(initialGameState);
-      while (keepIterating && totalNumberOfStatesExplored < MAX_NUM_STATES)
+      while (keepIterating && totalNumberOfStatesExplored < maxNumStates)
       {
          ArrayList<GameState> newStatesToExplore = new ArrayList<GameState>();
          for (GameState state : statesToExplore)
@@ -67,7 +90,7 @@ public class Solver
                   GameStateUtil.cleanUpPublicGameState(newGameState);
 
                   // STEP 4: print Side by Side
-                  if (PRINT)
+                  if (verbose)
                   {
                      PrintUtil.printSideBySide(
                            state,
@@ -82,15 +105,15 @@ public class Solver
                         state
                   );
                   newGameState.runningCost += cost;
-                  if (PRINT)
+                  if (verbose)
                   {
                      System.out.println("COST OF OPERATION: " + cost);
                      System.out.println("RUNNING TOTAL COST: " + newGameState.runningCost);
                   }
 
-                  if (newGameState.runningCost > MAX_COST)
+                  if (newGameState.runningCost > maxCost)
                   {
-                     if (PRINT)
+                     if (verbose)
                      {
                         System.out.println("SKIPPING STATE BECAUSE COST IS TOO HIGH!");
                      }

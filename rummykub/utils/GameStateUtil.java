@@ -1,4 +1,4 @@
-package rummykub.v2;
+package rummykub.v2.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,13 +7,20 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import rummykub.v2.dataStructures.GameState;
+import rummykub.v2.dataStructures.GameStateMutation;
+import rummykub.v2.dataStructures.Tile;
+import rummykub.v2.dataStructures.TileMembership;
+import rummykub.v2.dataStructures.TileSet;
+import rummykub.v2.enums.StateOperation;
+
 /**
  * @author lucasbrambrink
  *
  */
 public class GameStateUtil
 {
-   public static boolean PRINT = Solver.PRINT;
+   public static boolean verbose = false;
 
    public static HashMap<String, ArrayList<TileMembership>> getTileMap(GameState state)
    {
@@ -304,7 +311,7 @@ public class GameStateUtil
 
    public static GameStateMutation getBestMutation(GameState newGameState, TileSet tileSetToAdd, TileMembership found)
    {
-      if (PRINT)
+      if (verbose)
       {
          System.out.println("INCORPORATING " + PrintUtil.tileSetToString(tileSetToAdd));
       }
@@ -346,7 +353,7 @@ public class GameStateUtil
       {
          return null;
       }
-      if (PRINT)
+      if (verbose)
       {
          System.out.println(
                "MERGING " + PrintUtil.tileSetToString(tileSetToMutate) + " WITH " + PrintUtil.tileSetToString(tileSetToAdd)
@@ -376,7 +383,7 @@ public class GameStateUtil
 
       newGameState.allPublicSets.add(splitSets[0]);
       newGameState.allPublicSets.add(splitSets[1]);
-      if (PRINT)
+      if (verbose)
       {
          System.out
                .println("SPLITTING " + PrintUtil.tileSetToString(tileSetToMutate) + " WITH " + PrintUtil.tileSetToString(tileSetToAdd));
@@ -419,7 +426,7 @@ public class GameStateUtil
       clonedSet.addTile(found.tile);
       newGameState.allPublicSets.add(clonedSet);
 
-      if (PRINT)
+      if (verbose)
       {
          System.out
                .println("TAKING " + PrintUtil.tileToString(found.tile) + " FROM " + PrintUtil.tileSetToString(found.memberOf) + " TO FORM " + PrintUtil.tileSetToString(clonedSet) + " " + clonedSet.setType);

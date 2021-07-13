@@ -1,9 +1,13 @@
-package rummykub.v2;
+package rummykub.v2.dataStructures;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Collectors;
+
+import rummykub.v2.enums.Color;
+import rummykub.v2.enums.SetType;
+import rummykub.v2.utils.TileSetUtil;
 
 /**
  * @author lucasbrambrink

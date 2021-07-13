@@ -1,4 +1,6 @@
-package rummykub.v2;
+package rummykub.v2.dataStructures;
+
+import rummykub.v2.enums.Color;
 
 /**
  * @author lucasbrambrink

@@ -1,9 +1,14 @@
-package rummykub.v2;
+package rummykub.v2.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Collectors;
+
+import rummykub.v2.dataStructures.GameState;
+import rummykub.v2.dataStructures.Tile;
+import rummykub.v2.dataStructures.TileSet;
+import rummykub.v2.enums.Color;
 
 /**
  * @author lucasbrambrink
@@ -11,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class PrintUtil
 {
-   public static final boolean PRINT = Solver.PRINT;
+   public static boolean verbose = false;
    public static final int STATE_WIDTH = 20;
    public static final int MAX_PER_ROW = 10;
 
@@ -22,7 +27,7 @@ public class PrintUtil
 
    public static void print(String stringToPrint)
    {
-      if (PRINT)
+      if (verbose)
       {
          System.out.println(stringToPrint);
       }

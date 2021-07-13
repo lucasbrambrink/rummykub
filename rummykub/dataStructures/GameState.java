@@ -1,7 +1,9 @@
-package rummykub.v2;
+package rummykub.v2.dataStructures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import rummykub.v2.utils.GameStateUtil;
 
 /**
  * @author lucasbrambrink
