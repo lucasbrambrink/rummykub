@@ -1,4 +1,4 @@
-package rummykub;
+package rummykub.v2;
 
 /**
  * @author lucasbrambrink

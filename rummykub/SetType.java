@@ -7,11 +7,9 @@ package rummykub.v2;
  * @author lucasbrambrink
  *
  */
-public enum Color
+public enum SetType
 {
-   RED,
-   BLUE,
-   YELLOW,
-   BLACK,
-   JOKER,
+   RUN,
+   GROUP,
+   UNDEFINED,
 }
